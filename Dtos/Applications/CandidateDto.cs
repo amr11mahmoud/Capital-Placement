@@ -1,17 +1,17 @@
 ﻿using CapitalPlacement.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace CapitalPlacement.Models.Candidates
+namespace CapitalPlacement.Dtos.Applications
 {
-    public class Candidate
+    public class CandidateDto
     {
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
-        
+
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
         public required string Email { get; set; }
-        
+
         [DataType(DataType.PhoneNumber)]
         [Phone]
         public required string Phone { get; set; }

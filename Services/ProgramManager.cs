@@ -9,7 +9,7 @@ namespace CapitalPlacement.Services
 {
     public class ProgramManager : IProgramManager
     {
-        CapitalDbContext _context;
+        private readonly CapitalDbContext _context;
 
         public ProgramManager(CapitalDbContext capitalDbContext)
         {
@@ -31,6 +31,13 @@ namespace CapitalPlacement.Services
             if (getProgramResult.IsFailure)
             {
                 return Result.Failure<bool>(Error.Errors.CapitalPrograms.ProgramNotFound());
+            }
+
+            var programApplications = await _context.Applications.Where(a => a.CapitalProgramId ==  id).ToListAsync();
+            
+            if (programApplications.Any())
+            {
+                _context.Applications.RemoveRange(programApplications);
             }
 
             _context.Programs.Remove(getProgramResult.Value);

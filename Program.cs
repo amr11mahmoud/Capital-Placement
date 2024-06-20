@@ -53,6 +53,7 @@ namespace CapitalPlacement
             builder.Services.AddAutoMapper(typeof(MapperConfig));
 
             builder.Services.AddTransient(typeof(IProgramManager), typeof(ProgramManager));
+            builder.Services.AddTransient(typeof(IApplicationManager), typeof(ApplicationManager));
 
             var app = builder.Build();
 

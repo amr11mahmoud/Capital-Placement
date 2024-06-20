@@ -31,6 +31,12 @@
                 public static Error QuestionNotFound()
                    => new Error("question.not.found", "question not found!");
             }
+
+            public static class Applications
+            {
+                public static Error ApplicationNotFound()
+                    => new Error("application.not.found", "application not found!");
+            }
         }
 
         

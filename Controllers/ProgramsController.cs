@@ -22,7 +22,7 @@ namespace CapitalPlacement.Controllers
 
         // GET: api/<ProgramsController>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
             List<CapitalProgram> programs = await _programManager.GetAllPrograms();
 
@@ -56,6 +56,7 @@ namespace CapitalPlacement.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+            throw new NotImplementedException();
         }
 
         // DELETE api/<ProgramsController>/50fbb05b-c473-4f0f-309a-08dc911def49
