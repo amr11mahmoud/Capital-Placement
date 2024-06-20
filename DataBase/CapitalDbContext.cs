@@ -3,6 +3,7 @@ using CapitalPlacement.Models.Candidates;
 using CapitalPlacement.Models.Programs;
 using CapitalPlacement.Models.Questions;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace CapitalPlacement.DataBase

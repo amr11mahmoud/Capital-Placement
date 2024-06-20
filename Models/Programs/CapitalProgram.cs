@@ -8,6 +8,6 @@ namespace CapitalPlacement.Models.Programs
         public required string Title { get; set; }
         public required string Description { get; set; }
 
-        public IEnumerable<Question> CustomQuestions { get; set; }
+        public IList<Question> CustomQuestions { get; set; }
     }
 }

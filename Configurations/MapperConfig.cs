@@ -14,6 +14,7 @@ namespace CapitalPlacement.Configurations
             CreateMap<CapitalProgram, ReadProgramDto>().ReverseMap();
             CreateMap<Question, CreateQuestionDto>().ReverseMap();
             CreateMap<Question, ReadQuestionDto>().ReverseMap();
+            CreateMap<Question, UpdateQuestionDto>().ReverseMap();
         }
     }
 }

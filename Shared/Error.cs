@@ -28,6 +28,8 @@
             {
                 public static Error ProgramNotFound()
                     => new Error("program.not.found", "program not found!");
+                public static Error QuestionNotFound()
+                   => new Error("question.not.found", "question not found!");
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using CapitalPlacement.DataBase;
 using CapitalPlacement.Models.Programs;
+using CapitalPlacement.Models.Questions;
 using CapitalPlacement.Services.Interface;
 using CapitalPlacement.Shared;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,35 @@ namespace CapitalPlacement.Services
             return Result.Success(true);
         }
 
+        public async Task<Result<bool>> DeleteProgramQuestion(Guid programId, Guid questionId)
+        {
+            var getProgramResult = await GetProgram(programId);
+
+            if (getProgramResult.IsFailure)
+            {
+                return Result.Failure<bool>(Error.Errors.CapitalPrograms.ProgramNotFound());
+            }
+
+            var program = getProgramResult.Value;
+
+            var question = program.CustomQuestions.FirstOrDefault(q=> q.Id ==  questionId);
+
+            if (question == null)
+            {
+                return Result.Failure<bool>(Error.Errors.CapitalPrograms.QuestionNotFound());
+            }
+
+            // TODO find a better way to patch/delete child elements 
+            var questionIndex = program.CustomQuestions.IndexOf(question);
+
+            program.CustomQuestions.RemoveAt(questionIndex);
+
+            _context.Programs.Update(program);
+            await _context.SaveChangesAsync();
+            
+            return Result.Success(true);
+        }
+
         public async Task<List<CapitalProgram>> GetAllPrograms()
         {
             var programs = await _context.Programs.ToListAsync();
@@ -55,6 +85,34 @@ namespace CapitalPlacement.Services
             }
 
             return Result.Success(program);
+        }
+
+        public async Task<Result<bool>> UpdateProgramQuestion(Guid programId, Question question)
+        {
+            CapitalProgram? program = await _context.Programs.FirstOrDefaultAsync(p => p.Id == programId);
+
+            if (program == null)
+            {
+                return Result.Failure<bool>(Error.Errors.CapitalPrograms.ProgramNotFound());
+            }
+
+            var oldQuestion = program.CustomQuestions.FirstOrDefault(q => q.Id == question.Id);
+
+            if (question == null)
+            {
+                return Result.Failure<bool>(Error.Errors.CapitalPrograms.QuestionNotFound());
+            }
+
+            oldQuestion.Title = question.Title;
+            oldQuestion.Options = question.Options;
+            oldQuestion.EnableOtherOption = question.EnableOtherOption;
+            oldQuestion.Type = question.Type;
+            oldQuestion.MaxChoiceAllowed = question.MaxChoiceAllowed;
+
+            _context.Programs.Update(program);
+            await _context.SaveChangesAsync();
+
+            return Result.Success(true);
         }
     }
 }
